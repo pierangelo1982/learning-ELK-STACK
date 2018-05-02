@@ -1,11 +1,11 @@
-### ELK STACK
+# ELK STACK
 
 ### install Java
 ```
 sudo apt-get install default-jdk
 ```
 
-# Elasticsearch 6 
+### Elasticsearch 6 
 ```
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
 ```
