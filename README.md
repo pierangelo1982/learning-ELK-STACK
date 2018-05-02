@@ -38,3 +38,27 @@ sudo /bin/systemctl start elasticsearch.service
 
 so, now Elasticsearch should be running!
 
+Check if it running at this address: http://127.0.0.1:9200/
+```
+http://127.0.0.1:9200/
+```
+
+At this address you should see something as this:
+```
+{
+  "name" : "ktJu_0M",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "-zyJ1svGQu-nU5iKa23Z2w",
+  "version" : {
+    "number" : "6.2.4",
+    "build_hash" : "ccec39f",
+    "build_date" : "2018-04-12T20:37:28.497551Z",
+    "build_snapshot" : false,
+    "lucene_version" : "7.2.1",
+    "minimum_wire_compatibility_version" : "5.6.0",
+    "minimum_index_compatibility_version" : "5.0.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+```
+
