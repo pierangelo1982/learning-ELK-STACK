@@ -1,4 +1,4 @@
-### Basic Of Elasticsearch
+## Basic Of Elasticsearch
 
 Create a mapping schema for the index, in some way is how create an empty database:
 Crea uno schema per poter poi inidicizzare:
@@ -19,7 +19,7 @@ curl -H "Content-Type: application/json" -XPUT 127.0.0.1:9200/movies -d '
 check:
 http://127.0.0.1:9200/movies?pretty
 
-# insert data into index:
+### insert data into index:
 ```
 curl -H "Content-Type: application/json" -XPUT 127.0.0.1:9200/movies/movie/109487 -d '
 {
@@ -33,8 +33,8 @@ curl -H "Content-Type: application/json" -XPUT 127.0.0.1:9200/movies/movie/10948
 check:
 http://127.0.0.1:9200/movies/movie/109487?pretty
 
-# import many data:
-# json bulk
+### import many data:
+### json bulk
 ```
 curl -H "Content-Type: application/json" -XPUT 127.0.0.1:9200/_bulk -d '
 {"create" : { "_index" : "movies", "_type" : "movie", "_id" : "135569" } }
@@ -51,7 +51,7 @@ curl -H "Content-Type: application/json" -XPUT 127.0.0.1:9200/_bulk -d '
 
 ```
 
-# update content
+### update content
 ```
 curl -H "Content-Type: application/json" -XPOST 127.0.0.1:9200/movies/movie/109487/_update -d '
 {
@@ -61,20 +61,20 @@ curl -H "Content-Type: application/json" -XPOST 127.0.0.1:9200/movies/movie/1094
 }'
 ```
 
-# delete
+### delete
 ```
 curl -H "Content-Type: application/json" -XDELETE 127.0.0.1:9200/movies/movie/58559
 ```
 
-# query
-# see all data
+### query
+see all data
 ```
 http://localhost:9200/movies/_search?pretty=true&q=*:*
 
 curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/_search?pretty=true&q=*:*
 ```
 
-#query lite
+### query lite
 ```
 /movies/movie/_search?q=title:star
 
@@ -85,7 +85,7 @@ curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_sear
 
 ```
 
-# multiple key value query
+### multiple key value query
 ```
 /movies/movie/_search?q=+year:>2010+title:trek
 
@@ -105,7 +105,7 @@ curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_sear
 
 ```
 
-# request body search
+### request body search
 ```
 curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
 {
@@ -116,7 +116,7 @@ curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_sear
 		}
 }'
 ```
-# boolean query with a filter
+### boolean query with a filter
 ```
 curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d'
 {
@@ -130,7 +130,7 @@ curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_sear
 
 ```
 
-# some type of query filter 
+### some type of query filter 
 
 term: filter by exact values
 ```
