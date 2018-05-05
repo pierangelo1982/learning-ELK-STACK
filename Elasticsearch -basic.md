@@ -142,7 +142,7 @@ terms: match if any exact values in a list match
 ```
 range: Find numbers or dates in a given range (gt, gte, lt, lte)
 ```
-{“range”: {“year”: {“gte”: 2010}}}
+{“range”: {“year”: {“gte”: 2010}}}``
 ```
 exists: Find documents where a field exists
 ```
@@ -166,3 +166,44 @@ multi_match: run the same query on multiple fields.
 {“multi_match”: {“query”: “star”, “fields”: [“title”, “synopsis” ] } }
 ```
 bool: Works like a bool filter, but results are scored by relevance.
+
+queries are wrapped in a “query”: { } block,
+filters are wrapped in a “filter”: { } block.
+you can combine filters inside queries, or queries inside filters too.
+
+```
+curl -H "Content-Type: application/json" -XGET  127.0.0.1:9200/movies/movie/_search?pretty -d'
+{
+"query":{
+	"bool": {
+		"must": {"term": {"title": "trek"}},
+		"filter": {"range": {"year": {"gte": 2010}}}
+			}
+		}
+}'
+```
+
+### phrase matching
+with match phrase the words must be ib the right sequence, for example if star wars is wars star not find
+```
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+	"query": {
+		"match_phrase": {
+			"title": "star wars"
+			}
+		}
+}'
+```
+
+order matter, but with slop you can accept some little margin of incongruence in the error:
+```
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+	"query": {
+		"match_phrase": {
+			"title": {"query": "star beyond", "slop": 1}
+			}
+		}
+}'
+```
