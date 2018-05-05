@@ -207,3 +207,22 @@ curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_sear
 		}
 }'
 ```
+
+## pagination syntax
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/movies/movie/_search?size=2&from=2&pretty'
+```
+
+```
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d'
+{
+	"from": 2,
+	"size": 2,
+	"query": {"match": {"genre": "Sci-Fi"}}
+}'
+```
+
+## sorting
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/movies/movie/_search?sort=year&pretty'
+```
