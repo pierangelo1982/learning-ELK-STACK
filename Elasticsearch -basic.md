@@ -50,3 +50,28 @@ curl -H "Content-Type: application/json" -XPUT 127.0.0.1:9200/_bulk -d '
 '
 
 ```
+
+# update content
+```
+curl -H "Content-Type: application/json" -XPOST 127.0.0.1:9200/movies/movie/109487/_update -d '
+{
+	"doc": {
+		"title": "Interstellarooo"
+		}
+}'
+```
+
+# delete
+```
+curl -H "Content-Type: application/json" -XDELETE 127.0.0.1:9200/movies/movie/58559
+```
+
+# vedi tutti
+```
+http://localhost:9200/movies/_search?pretty=true&q=*:*
+
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/_search?pretty=true&q=*:*
+```
+
+
+
