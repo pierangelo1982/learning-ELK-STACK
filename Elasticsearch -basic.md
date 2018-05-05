@@ -66,12 +66,90 @@ curl -H "Content-Type: application/json" -XPOST 127.0.0.1:9200/movies/movie/1094
 curl -H "Content-Type: application/json" -XDELETE 127.0.0.1:9200/movies/movie/58559
 ```
 
-# vedi tutti
+# query
+# see all data
 ```
 http://localhost:9200/movies/_search?pretty=true&q=*:*
 
 curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/_search?pretty=true&q=*:*
 ```
 
+#query lite
+```
+/movies/movie/_search?q=title:star
 
 
+http://127.0.0.1:9200/movies/movie/_search?q=title:star
+
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?q=title:star
+
+```
+
+# multiple key value query
+```
+/movies/movie/_search?q=+year:>2010+title:trek
+
+http://127.0.0.1:9200/movies/movie/_search?q=+year:>2010+title:trek
+
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?q=+year:>2010+title:trek
+```
+
+
+spaces etc. need to be URL encoded
+```
+/movies/movie/_search?q=%2Byear%3A%3E2010+%2Btitle%3Atrek
+
+http://127.0.0.1:9200/movies/movie/_search?q=%2Byear%3A%3E2010+%2Btitle%3Atrek
+
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?q=%2Byear%3A%3E2010+%2Btitle%3Atrek
+
+```
+
+# request body search
+```
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d '
+{
+	"query": {
+		"match": {
+			"title": "star"
+			}
+		}
+}'
+```
+# boolean query with a filter
+```
+curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_search?pretty -d'
+{
+"query":{
+	"bool": {
+		"must": {"term": {"title": "trek"}},
+		"filter": {"range": {"year": {"gte": 2010}}}
+		}
+	}
+}'
+
+```
+
+# some type of query filter 
+
+term: filter by exact values
+```
+{“term”: {“year”: 2014}}
+```
+terms: match if any exact values in a list match
+```
+{“terms”: {“genre”: [“Sci-Fi”, “Adventure”] } }
+```
+range: Find numbers or dates in a given range (gt, gte, lt, lte)
+```
+{“range”: {“year”: {“gte”: 2010}}}
+```
+exists: Find documents where a field exists
+```
+{“exists”: {“field”: “tags”}}
+```
+missing: Find documents where a field is missing
+```
+{“missing”: {“field”: “tags”}}
+```
+bool: Combine filters with Boolean logic (must, must_not, should)
