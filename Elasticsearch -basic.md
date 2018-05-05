@@ -151,5 +151,18 @@ exists: Find documents where a field exists
 missing: Find documents where a field is missing
 ```
 {“missing”: {“field”: “tags”}}
-```
+
 bool: Combine filters with Boolean logic (must, must_not, should)
+match_all: returns all documents and is the default. Normally used with a filter.
+```
+{“match_all”: {}}
+```
+match: searches analyzed results, such as full text search.
+```
+{“match”: {“title”: “star”}}
+```
+multi_match: run the same query on multiple fields.
+```
+{“multi_match”: {“query”: “star”, “fields”: [“title”, “synopsis” ] } }
+```
+bool: Works like a bool filter, but results are scored by relevance.
