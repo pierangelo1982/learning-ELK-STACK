@@ -7,12 +7,11 @@ sudo apt-get update
 sudo apt-get install mysql-server
 ```
 
-download and install install a jdbc driver
+download and install install the jdbc driver
 
-choose Connector/J 8.0.11
-and Platform indipendent version:
+Choose Connector/J 8.0.11 and Platform indipendent version as Operating System:
+Url:
 
-from here:
 https://dev.mysql.com/downloads/connector/j/
 
 ```
@@ -24,20 +23,20 @@ unzip mysql-connector:
 unzip mysql-connector-java-5.1.46.zip
 ```
 
-create a logstash configuration file in /etc/logstash/conf.d/
+Create a logstash configuration file in /etc/logstash/conf.d/, in my case I named the file logstash-mysql.conf
 ```
 vim /etc/logstash/conf.d/logstash-mysql.conf
 ```
-and connect to the db:
+and connect to the db and Elasticsearch with this settings:
 ```
 input {
 	jdbc {
-		jdbc_connection_string => "jdbc:mysql://localhost:3306/movielens"
+		jdbc_connection_string => "jdbc:mysql://localhost:3306/nameofthedatabase"
 		jdbc_user => "root"
 		jdbc_password => "password"
 		jdbc_driver_library => "/home/username/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46-bin.jar"
 		jdbc_driver_class => "com.mysql.jdbc.Driver"
-		statement => "SELECT * FROM movies"
+		statement => "SELECT * FROM nameOfTable"
 	}
 }
 
@@ -50,9 +49,16 @@ output {
 	}
 }
 ```
-N.B: the jdbc_driver_library => must pint to the jdbc driver that you had downloaded and unzip before...
+# cBrief explanation of the .conf file above:
+the jdbc_connection_string (line3) => must terminated with the name of your database.
 
-# import database:
+the jdbc_driver_library (line 6)=> the path must point to the jdbc driver that you had downloaded and unzipped before...
+
+statement => "SELECT * FROM nameOfTable" (line 8) => is the query on the table of your database.
+
+in output, index (line 16) => you give the name to the elasticsearch index that will be automatically created when you launch logstash.
+
+# Create and import database:
 download database from movielens:
 ```
 wget http://files.grouplens.org/datasets/movielens/ml-100k.zip
@@ -120,7 +126,6 @@ mysql> SELECT * FROM movies WHERE title LIKE 'Star%';
 15 rows in set (0,00 sec)
 
 ```
-
 Start logstash:
 ```
 cd /usr/share/logstash/
