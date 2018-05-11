@@ -358,3 +358,29 @@ curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/logstash-2018.05.
 	}
 }'
 ```
+
+# Nested
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/ratings/rating/_search?size=0&pretty' -d '
+{
+	"query": {
+		"match_phrase": {
+			"title": "Star Wars"
+		}
+	},
+	"aggs" : {
+		"titles": {
+			"terms": {
+				"field": "title.raw"
+			},
+		"aggs": {
+			"avg_rating": {
+				"avg": {
+					"field" : "rating"
+				}
+			}
+		}
+	}
+}
+}'
+```
