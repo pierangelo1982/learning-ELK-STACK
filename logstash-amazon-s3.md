@@ -59,3 +59,7 @@ cd /usr/share/logstash/
 
 sudo bin/logstash -f /etc/logstash/conf.d/logstash-s3.conf
 ```
+
+check in elasticsearch:
+
+curl -H "Content-Type: application/json" -XGET  '127.0.0.1:9200/logstash-2018.05.07/_search?&pretty'

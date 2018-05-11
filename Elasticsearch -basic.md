@@ -226,3 +226,53 @@ curl -H "Content-Type: application/json" -XGET 127.0.0.1:9200/movies/movie/_sear
 ```
 curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/movies/movie/_search?sort=year&pretty'
 ```
+
+## aggregation
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/ratings/rating/_search?size=0&pretty' -d '
+{
+	"aggs": {
+		"ratings": {
+			"terms": {
+				"field": "rating"
+				}
+			}
+		}
+}'
+```
+
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/ratings/rating/_search?size=0&pretty' -d '
+{
+	"query": {
+		"match": {
+			"rating": 5.0
+		}
+	},
+	"aggs" : {
+		"ratings": {
+			"terms": {
+				"field" : "rating"
+			}
+		}
+	}
+}'
+```
+
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/ratings/rating/_search?size=0&pretty' -d '
+{
+	"query": {
+		"match_phrase": {
+			"title": "Star Wars Episode IV"
+			}
+		},
+	"aggs" : {
+		"avg_rating": {
+			"avg": {
+				"field" : "rating"
+			}
+		}
+	}
+}'
+```
