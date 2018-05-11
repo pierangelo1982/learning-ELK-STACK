@@ -276,3 +276,85 @@ curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/ratings/rating/_s
 	}
 }'
 ```
+
+## histograms
+itervals etc...
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/ratings/rating/_search?size=0&pretty' -d '
+{
+	"aggs" : {
+		"whole_ratings": {
+			"histogram": {
+				"field": "rating",
+				"interval": 1.0
+			}
+		}
+	}
+}'
+```
+
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/movies/movie/_search?size=0&pretty' -d '
+{
+	"aggs" : {
+		"release": {
+			"histogram": {
+				"field": "year",
+				"interval": 10
+			}
+		}
+	}
+}'
+```
+
+# time
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/logstash-2018.05.07/_search?size=0&pretty' -d '
+{
+	"aggs" : {
+		"timestamp": {
+			"date_histogram": {
+				"field": "@timestamp",
+				"interval": "hour"
+			}
+		}
+	}
+}'
+```
+
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/logstash-2018.05.07/_search?size=0&pretty' -d '
+{
+	"query" : {
+		"match": {
+			"agent": "Googlebot"
+		}
+	},
+	"aggs" : {
+		"timestamp": {
+			"date_histogram": {
+				"field": "@timestamp",
+				"interval": "hour"
+			}
+		}
+	}
+}'
+```
+
+```
+curl -H "Content-Type: application/json" -XGET '127.0.0.1:9200/logstash-2018.05.07/_search?size=0&pretty' -d '{
+	"query" : {
+		"match": {
+			"response": "500"
+		}
+	},
+	"aggs" : {
+		"timestamp": {
+			"date_histogram": {
+				"field": "@timestamp",
+				"interval": "minute"
+			}
+		}
+	}
+}'
+```
