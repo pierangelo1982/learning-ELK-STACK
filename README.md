@@ -62,3 +62,22 @@ At this address you should see something as this:
 }
 ```
 
+
+# memory problem
+for settings the memory usage, edit jvm.option:
+```
+sudo vim /etc/elasticsearch/jvm.options
+```
+
+and change:
+```
+-Xms1g
+-Xmx1g
+```
+with:
+```
+-Xms512m
+-Xmx512m
+
+```
+

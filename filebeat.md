@@ -58,7 +58,7 @@ and insert the path to you logs files:
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     #var.paths:
-    var.paths: "/home/<username>/logs/access*"
+    var.paths: ["/home/<username>/logs/access*"]
   # Error logs
   error:
     enabled: true
@@ -66,7 +66,7 @@ and insert the path to you logs files:
     # Set custom paths for the log files. If left empty,
     # Filebeat will choose the paths depending on your OS.
     #var.paths:
-    var.paths: "/home/<username>/logs/error"
+    var.paths: ["/home/<username>/logs/error"]
 
 ```
 
